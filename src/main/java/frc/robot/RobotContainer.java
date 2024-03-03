@@ -32,7 +32,7 @@ public class RobotContainer {
   }
   
   public Command[] getTeleCommands() { 
-    Command[] commands = new Command[] {runClimber, joyDrive};
+    Command[] commands = new Command[] {joyDrive, runClimber};
     return commands;
   }
 }

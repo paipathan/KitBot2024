@@ -8,34 +8,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Shooter;
 
-
-public class joyDrive extends Command {
-
-  public Drivetrain drive;
+public class RunShooter extends Command {
   public XboxController controller;
-
-  public joyDrive() {
+  public Shooter shooter;
+  
+  public RunShooter() {
     controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
-    this.drive = new Drivetrain(controller);
-    addRequirements(drive);
+    shooter = new Shooter(controller);
+    addRequirements(shooter);    
   }
 
+  
   @Override
-  public void initialize() {
-    
-  }
+  public void initialize() {}
 
 
   @Override
   public void execute() {
-    drive.move();
+    shooter.shoot();
+    shooter.intake();
   }
 
 
   @Override
   public void end(boolean interrupted) {}
+
 
   @Override
   public boolean isFinished() {
