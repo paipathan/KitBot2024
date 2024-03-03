@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,14 +24,14 @@ public class Shooter extends SubsystemBase {
 
   public void shoot() {
     double topPower = controller.getRightBumper() ? 1 : 0;
-    double bottomPower = controller.getRightTriggerAxis();
-    top.set(topPower);
-    bottom.set(bottomPower);
+    double bottomPower = (controller.getRightTriggerAxis() != 0) ? 1 : 0;
+    top.set(ControlMode.PercentOutput, topPower);
+    bottom.set(ControlMode.PercentOutput, bottomPower);
   }
 
   public void intake() {
-    top.set(controller.getLeftTriggerAxis());
-    bottom.set(controller.getLeftTriggerAxis());
+    top.set(ControlMode.PercentOutput, -controller.getLeftTriggerAxis());
+    bottom.set(ControlMode.PercentOutput, -controller.getLeftTriggerAxis());
   }
 
   @Override

@@ -21,7 +21,7 @@ public class RunClimber extends Command {
 
   @Override
   public void execute() {
-    climber.bumperClimb();
+    climber.buttonClimb();
     addRequirements(climber);
   }
 

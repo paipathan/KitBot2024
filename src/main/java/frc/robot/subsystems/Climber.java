@@ -21,101 +21,69 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Climber extends SubsystemBase {
 
   public XboxController controller;
-  public CANSparkMax motor1, motor2,
-                     motor3, motor4;
-
-  public MotorControllerGroup leftMotors, rightMotors;
+  public CANSparkMax leftMotor1, leftMotor2,
+                     rightMotor1, rightMotor2;
+                     
+  public MotorControllerGroup leftGroup, rightGroup;
 
   public Climber() {
     controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
-    motor1 = new CANSparkMax(Constants.CLIMB_MOTOR_1, MotorType.kBrushless);
-    // motor2 = new CANSparkMax(Constants.CLIMB_MOTOR_2, MotorType.kBrushless);
-    // motor3 = new CANSparkMax(Constants.CLIMB_MOTOR_3, MotorType.kBrushless);
-    // motor4 = new CANSparkMax(Constants.CLIMB_MOTOR_4, MotorType.kBrushless);
-    leftMotors = new MotorControllerGroup(motor1, motor2);
-    // rightMotors = new MotorControllerGroup(motor3, motor4);
+    leftMotor1 = new CANSparkMax(Constants.CLIMB_MOTOR_1, MotorType.kBrushless);
+    leftMotor2 = new CANSparkMax(Constants.CLIMB_MOTOR_2, MotorType.kBrushless);
+    rightMotor1 = new CANSparkMax(Constants.CLIMB_MOTOR_3, MotorType.kBrushless);
+    rightMotor2 = new CANSparkMax(Constants.CLIMB_MOTOR_4, MotorType.kBrushless);
+
+    leftGroup = new MotorControllerGroup(leftMotor1, leftMotor2);
+    rightGroup = new MotorControllerGroup(rightMotor1, rightMotor2);
   }
 
 
   public void buttonClimb() {
     if(controller.getYButton()) {
-      motor1.setVoltage(0.4);
-      motor2.setVoltage(0.4);
+      leftGroup.setInverted(false);
+      rightGroup.setInverted(false);
+      leftGroup.setVoltage(0.8);
+      rightGroup.setVoltage(0.8);
 
     } else if(controller.getAButton()) {
-      motor1.setVoltage(-0.4);
-      motor2.setVoltage(-0.4);
+      leftGroup.setInverted(true);
+      rightGroup.setInverted(true);
+      leftGroup.setVoltage(0.8);
+      rightGroup.setVoltage(0.8);
 
     } else {
-      motor1.setVoltage(0);
-      motor2.setVoltage(0);
+      leftGroup.setVoltage(0);
+      rightGroup.setVoltage(0);
     }
 
-    SmartDashboard.putNumber("m1 volt", motor1.getBusVoltage());
-    SmartDashboard.putNumber("m2 volt", motor2.getBusVoltage());
-    // SmartDashboard.putNumber("m3 volt", motor3.getBusVoltage());
-    // SmartDashboard.putNumber("m4 volt", motor4.getBusVoltage());
+    SmartDashboard.putNumber("left group volt", leftMotor1.getBusVoltage());
+    SmartDashboard.putNumber("right group volt", rightMotor1.getBusVoltage());
   }
-
-  public void joystickClimb() {
-
-    // if(MathUtil.applyDeadband(controller.getLeftY(), 0.1) != 0) {
-    //   motor1.set(controller.getLeftY());
-    //   motor2.set(controller.getLeftY());
-    //   motor3.set(controller.getLeftY());
-    //   motor4.set(controller.getLeftY());
-
-    //   // motor1.set(MathUtil.applyDeadband(controller.getLeftY(), 0.1));
-    //   // motor2.set(MathUtil.applyDeadband(controller.getLeftY(), 0.1));
-    //   // motor3.set(MathUtil.applyDeadband(controller.getLeftY(), 0.1));
-    //   // motor4.set(MathUtil.applyDeadband(controller.getLeftY(), 0.1));
-    // } else {
-    //   motor1.set(0.8);
-    //   motor2.set(0.8);
-    //   motor3.set(0.8);
-    //   motor4.set(0.8);
-    // }
-
-    motor1.set(-controller.getLeftY());
-    motor2.set(-controller.getLeftY());
-    // motor3.set(-controller.getLeftY());
-    // motor4.set(-controller.getLeftY());
-
-
-    SmartDashboard.putNumber("m1 volt", motor1.getBusVoltage());
-    SmartDashboard.putNumber("m2 volt", motor2.getBusVoltage());
-    // SmartDashboard.putNumber("m3 volt", motor3.getBusVoltage());
-    // SmartDashboard.putNumber("m4 volt", motor4.getBusVoltage());
-  }
-
-  public void triggerClimb() {}
-
 
   public void bumperClimb() {
     double power = (controller.getLeftBumper() || controller.getRightBumper()) ? 0.8 : 0;
     boolean invert = controller.getLeftBumper() ? true : false;
-    leftMotors.setInverted(invert);
-    // rightMotors.setInverted(invert);
-    leftMotors.setVoltage(power);
-    // rightMotors.setVoltage(power);
+    leftGroup.setInverted(invert);
+    rightGroup.setInverted(invert);
+    leftGroup.setVoltage(power);
+    rightGroup.setVoltage(power);
   }
 
   public void setCoast() {
     if(controller.getXButton()) {
-      motor1.setIdleMode(IdleMode.kCoast);
-      motor2.setIdleMode(IdleMode.kCoast);
-      // motor3.setIdleMode(IdleMode.kCoast);
-      // motor4.setIdleMode(IdleMode.kCoast);
-
+      leftMotor1.setIdleMode(IdleMode.kCoast);
+      leftMotor2.setIdleMode(IdleMode.kCoast);
+      rightMotor1.setIdleMode(IdleMode.kCoast);
+      rightMotor1.setIdleMode(IdleMode.kCoast);
     }
   }
 
   public void setBreak() {
     if(controller.getBButton()) {
-      motor1.setIdleMode(IdleMode.kBrake);
-      motor2.setIdleMode(IdleMode.kBrake);
-      // motor3.setIdleMode(IdleMode.kBrake);
-      // motor4.setIdleMode(IdleMode.kBrake);
+      leftMotor1.setIdleMode(IdleMode.kBrake);
+      leftMotor2.setIdleMode(IdleMode.kBrake);
+      rightMotor1.setIdleMode(IdleMode.kBrake);
+      rightMotor2.setIdleMode(IdleMode.kBrake);
     }
   }
 
