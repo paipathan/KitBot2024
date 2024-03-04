@@ -15,8 +15,8 @@ public class RunShooter extends Command {
   public Shooter shooter;
   
   public RunShooter() {
-    controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
-    shooter = new Shooter(controller);
+    this.controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
+    this.shooter = new Shooter(controller);
     addRequirements(shooter);    
   }
 

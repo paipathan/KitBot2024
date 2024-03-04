@@ -4,15 +4,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
 public class RunClimber extends Command {
 
+
+  public XboxController controller;
   public Climber climber;
+
   
   public RunClimber() {
-    climber = new Climber();
+    this.controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
+    this.climber = new Climber(controller);
     addRequirements(climber);
   }
 

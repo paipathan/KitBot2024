@@ -17,7 +17,7 @@ public class joyDrive extends Command {
   public XboxController controller;
 
   public joyDrive() {
-    controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
+    this.controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
     this.drive = new Drivetrain(controller);
     addRequirements(drive);
   }

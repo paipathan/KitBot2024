@@ -26,8 +26,8 @@ public class Climber extends SubsystemBase {
                      
   public MotorControllerGroup leftGroup, rightGroup;
 
-  public Climber() {
-    controller = new XboxController(Constants.XBOX_DRIVE_CONTROLLER_PORT);
+  public Climber(XboxController controller) {
+    this.controller = controller;
     leftMotor1 = new CANSparkMax(Constants.CLIMB_MOTOR_1, MotorType.kBrushless);
     leftMotor2 = new CANSparkMax(Constants.CLIMB_MOTOR_2, MotorType.kBrushless);
     rightMotor1 = new CANSparkMax(Constants.CLIMB_MOTOR_3, MotorType.kBrushless);

@@ -24,7 +24,7 @@ public class Shooter extends SubsystemBase {
 
   public void shoot() {
     double topPower = controller.getRightBumper() ? 1 : 0;
-    double bottomPower = (controller.getRightTriggerAxis() != 0) ? 1 : 0;
+    double bottomPower = controller.getRightTriggerAxis();
     top.set(ControlMode.PercentOutput, topPower);
     bottom.set(ControlMode.PercentOutput, bottomPower);
   }

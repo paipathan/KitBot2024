@@ -9,6 +9,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.RunClimber;
+import frc.robot.commands.RunShooter;
 import frc.robot.commands.joyDrive;
 
 public class RobotContainer {
@@ -19,12 +20,14 @@ public class RobotContainer {
 
   public joyDrive joyDrive; 
   public RunClimber runClimber;
+  public RunShooter runShooter;
 
   //-------------------------------//
 
   public RobotContainer() { // initialize commands
     joyDrive = new joyDrive();
     runClimber = new RunClimber();
+    runShooter = new RunShooter();
   }
 
   public Command getAutoCommand() {
